@@ -4,4 +4,4 @@ ACGO Client Project
 
 采用技术
 ----------
-nodejs+electron+react+redux
+nodejs+electron
