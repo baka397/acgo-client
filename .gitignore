@@ -1,0 +1,8 @@
+# Git对于.ignore配置文件规则是优先级下面高于上面
+.git
+*.log
+*.zip
+
+# 忽略目录下的所有文件
+node_modules/*
+coverage/*
