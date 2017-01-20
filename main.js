@@ -22,6 +22,8 @@ switch (process.platform) {
                 flashVersion='24.0.0.186';
                 break;
             case 'ia32':
+                flashPlugin='./plugins/flash/win32/pepflashplayer.dll';
+                flashVersion='24.0.0.186';
                 break;
         }
         break;
