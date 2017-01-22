@@ -4,11 +4,17 @@ const config = require('./config/');
 const winTool = require('./common/winTool');
 const sesTool = require('./common/sesTool');
 
-const debug = /--debug/.test(process.argv[2]);
+const develop = /--develop/.test(process.argv[2]);
+const debug = /--debug/.test(process.argv[3]);
 
 const title = config.project.name + ' version:' + config.project.version;
 
 let mainWindow = null;
+let asarDir = '../app.asar.unpacked';
+//设置asar开发配置
+if(develop){
+    asarDir = '.';
+}
 
 let icon = ''; //图标
 let flashPlugin = ''; //flash插件地址
@@ -19,11 +25,11 @@ switch (process.platform) {
         icon = './assets/ico/app.ico';
         switch(process.arch){
             case 'x64':
-                flashPlugin='./plugins/flash/win/x64/pepflashplayer.dll';
+                flashPlugin=asarDir+'/plugins/flash/win/x64/pepflashplayer.dll';
                 flashVersion='24.0.0.186';
                 break;
             case 'ia32':
-                flashPlugin='./plugins/flash/win/x86/pepflashplayer.dll';
+                flashPlugin=asarDir+'/plugins/flash/win/x86/pepflashplayer.dll';
                 flashVersion='24.0.0.186';
                 break;
         }
@@ -47,7 +53,7 @@ function initialize () {
     if (shouldQuit) return app.quit();
     function createTray(){
         if(!icon) return;
-        let tray = new Tray(icon);
+        let tray = new Tray(path.join(__dirname, icon));
         const contextMenu = Menu.buildFromTemplate([
             {
                 label: '最小化',

@@ -4,8 +4,8 @@
   "description": "Client project for acgo",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "dev": "electron . --debug",
+    "start": "electron . --develop",
+    "dev": "electron .  --develop --debug",
     "pack": "node ./package.js"
   },
   "repository": {
@@ -25,7 +25,8 @@
     "devtron": "^1.4.0",
     "electron": "^1.4.15",
     "electron-packager": "^8.5.0",
-    "electron-winstaller": "^2.5.1"
+    "electron-winstaller": "^2.5.1",
+    "del": "^2.2.2"
   },
   "dependencies": {}
 }
