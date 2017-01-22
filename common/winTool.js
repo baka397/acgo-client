@@ -1,30 +1,30 @@
 const debug = /--debug/.test(process.argv[2]);
 let mainWindowMax = false;
-module.exports = function(mainWindow,type){
-	if(!mainWindow) return;
-	let args = Array.prototype.slice.call(arguments, 2);
+module.exports = function(type){
+	if(!this) return;
+	let args = Array.prototype.slice.call(arguments, 1);
 	switch(type){
         case 'close':
-            mainWindow.close();
+            this.close();
             break;
         case 'min':
-            mainWindow.minimize();
+            this.minimize();
             break;
         case 'max':
         	if(debug) return;
             if(mainWindowMax){
                 mainWindowMax=false;
-                mainWindow.unmaximize();
+                this.unmaximize();
             }
             else{
                 mainWindowMax=true;
-                mainWindow.maximize();
+                this.maximize();
             }
             break;
         case 'change':
         	if(debug) return;
-            mainWindow.setSize(args[0],args[1]);
-            mainWindow.center();
+            this.setSize(args[0],args[1]);
+            this.center();
             break;
     }
 }

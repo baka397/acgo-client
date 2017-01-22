@@ -1,7 +1,8 @@
 const path = require('path');
-const {BrowserWindow,app,Tray,ipcMain,Menu} = require('electron');
+const {BrowserWindow,app,Tray,ipcMain,Menu,protocol} = require('electron');
 const config = require('./config/');
 const winTool = require('./common/winTool');
+const sesTool = require('./common/sesTool');
 
 const debug = /--debug/.test(process.argv[2]);
 
@@ -18,11 +19,11 @@ switch (process.platform) {
         icon = './assets/ico/app.ico';
         switch(process.arch){
             case 'x64':
-                flashPlugin='./plugins/flash/win64/pepflashplayer.dll';
+                flashPlugin='./plugins/flash/win/x64/pepflashplayer.dll';
                 flashVersion='24.0.0.186';
                 break;
             case 'ia32':
-                flashPlugin='./plugins/flash/win32/pepflashplayer.dll';
+                flashPlugin='./plugins/flash/win/x86/pepflashplayer.dll';
                 flashVersion='24.0.0.186';
                 break;
         }
@@ -52,14 +53,14 @@ function initialize () {
                 label: '最小化',
                 type: 'normal',
                 click:function(){
-                    winTool(mainWindow,'min');
+                    winTool.apply(mainWindow,['min']);
                 }
             },
             {
                 label: '退出',
                 type: 'normal',
                 click:function(){
-                    winTool(mainWindow,'close');
+                    winTool.apply(mainWindow,['close']);
                 }
             }
         ])
@@ -120,9 +121,15 @@ function makeSingleInstance () {
 }
 
 //检测IPC通讯
-ipcMain.on('window',function(e,type,width,height){
-    winTool(mainWindow,type,width,height);
+ipcMain.on('window',function(e){
+    let args = Array.prototype.slice.call(arguments, 1);
+    winTool.apply(mainWindow,args);
 });
+
+ipcMain.on('session',function(e,type){
+    let args = Array.prototype.slice.call(arguments, 1);
+    sesTool.apply(e,args);
+})
 
 //检测进程参数,为自动更新准备
 switch (process.argv[1]){
