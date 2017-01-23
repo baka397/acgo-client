@@ -1,5 +1,5 @@
 const pkg = require('../package.json');
-const debug = /--debug/.test(process.argv[2]);
+const develop = /--develop/.test(process.argv[2]);
 
 // 默认配置
 let defaultConfig = {
@@ -10,8 +10,8 @@ let defaultConfig = {
 	clientPath:'http://127.0.0.1:8001/client'               // 客户端地址
 }
 
-// 启动配置，部署环境变量：dev、test、uat、online
-let startupConfig = './config-' + (debug?'debug':'online');
+// 启动配置，部署环境变量：debug、online
+let startupConfig = './config-' + (develop?'debug':'online');
 // 获取环境配置
 let config = {};
 try {console.log('Start config %s', startupConfig);config = require(startupConfig);} catch(e) {console.error('Can\'t find config file %s', startupConfig)};
