@@ -1,4 +1,4 @@
-const debug = /--debug/.test(process.argv[2]);
+const debug = /--debug/.test(process.argv[3]);
 let mainWindowMax = false;
 module.exports = function(type){
 	if(!this) return;
