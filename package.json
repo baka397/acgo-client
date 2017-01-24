@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron . --develop",
     "dev": "electron .  --develop --debug",
+    "debug": "electron . --online --debug",
     "pack": "node ./package.js"
   },
   "repository": {
