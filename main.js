@@ -1,8 +1,10 @@
 const path = require('path');
 const {BrowserWindow,app,Tray,ipcMain,Menu,protocol} = require('electron');
+const storage = require('electron-json-storage');
 const config = require('./config/');
 const winTool = require('./common/winTool');
 const sesTool = require('./common/sesTool');
+const appTool = require('./common/appTool');
 
 const develop = /--develop/.test(process.argv[2]);
 const debug = /--debug/.test(process.argv[3]);
@@ -15,6 +17,11 @@ let asarDir = '../app.asar.unpacked';
 if(develop){
     asarDir = '.';
 }
+storage.get('cacheDir',function(error, data) {
+    if(data){
+        app.setPath('userData', data);
+    }
+});
 
 let icon = ''; //图标
 let flashPlugin = ''; //flash插件地址
@@ -86,7 +93,7 @@ function initialize () {
         mainWindow = new BrowserWindow(windowOptions);
         mainWindow.loadURL(config.clientPath);
         // Launch fullscreen with DevTools open, usage: npm run debug
-        if (debug) {
+        if(debug) {
             mainWindow.webContents.openDevTools();
             mainWindow.maximize();
             require('devtron').install();
@@ -137,6 +144,11 @@ ipcMain.on('window',function(e){
 ipcMain.on('session',function(e,type){
     let args = Array.prototype.slice.call(arguments, 1);
     sesTool.apply(e,args);
+})
+
+ipcMain.on('app',function(e,type){
+    let args = Array.prototype.slice.call(arguments, 1);
+    appTool.apply(e,args);
 })
 
 //检测进程参数,为自动更新准备
