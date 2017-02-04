@@ -83,7 +83,7 @@ function initialize () {
     function createWindow () {
         const windowOptions = {
             width: 400,
-            height: 600,
+            height: 134,
             frame: false,
             icon:icon?icon:'',
             webPreferences: {
@@ -91,7 +91,7 @@ function initialize () {
             }
         }
         mainWindow = new BrowserWindow(windowOptions);
-        mainWindow.loadURL(config.clientPath);
+        mainWindow.loadURL(path.join('file://', __dirname, config.preloadPath+'?clientPath='+encodeURIComponent(config.clientPath)));
         // Launch fullscreen with DevTools open, usage: npm run debug
         if(debug) {
             mainWindow.webContents.openDevTools();
