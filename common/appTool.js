@@ -1,5 +1,4 @@
 const {app,dialog} = require('electron');
-const storage = require('electron-json-storage');
 module.exports = function(type){
     let sender = this.sender;
     let args = Array.prototype.slice.call(arguments, 1);

@@ -29,7 +29,5 @@
     "electron-winstaller": "^2.5.1",
     "del": "^2.2.2"
   },
-  "dependencies": {
-    "electron-json-storage": "^3.0.1"
-  }
+  "dependencies": {}
 }
