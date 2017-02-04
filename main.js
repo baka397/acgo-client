@@ -78,7 +78,6 @@ function initialize () {
             width: 400,
             height: 600,
             frame: false,
-            transparent: true,
             icon:icon?icon:'',
             webPreferences: {
                 plugins: true
@@ -92,6 +91,9 @@ function initialize () {
             mainWindow.maximize();
             require('devtron').install();
         }
+        mainWindow.on('closed', function () {
+            mainWindow = null;
+        });
         mainWindow.on('closed', function () {
             mainWindow = null;
         });
