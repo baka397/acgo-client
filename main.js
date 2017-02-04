@@ -16,7 +16,7 @@ let asarDir = '../app.asar.unpacked';
 if(develop){
     asarDir = '.';
 }
-app.setPath('userData', path.join(__dirname, config.cachePath));
+app.setPath('userData', path.join(__dirname, asarDir+config.cachePath));
 
 let icon = ''; //图标
 let flashPlugin = ''; //flash插件地址
