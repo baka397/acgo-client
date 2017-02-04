@@ -8,7 +8,8 @@ let defaultConfig = {
 		version: pkg.version								// 项目版本
 	},
 	clientPath:'http://127.0.0.1:8001/client',              // 客户端地址
-    preloadPath:'./assets/page/preload.html'                 // 预加载页面
+    preloadPath:'./assets/page/preload.html',               // 预加载页面
+    cachePath:'./cache/'                                    // 缓存目录
 }
 
 // 启动配置，部署环境变量：debug、online

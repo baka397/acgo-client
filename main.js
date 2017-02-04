@@ -1,6 +1,5 @@
 const path = require('path');
 const {BrowserWindow,app,Tray,ipcMain,Menu,protocol} = require('electron');
-const storage = require('electron-json-storage');
 const config = require('./config/');
 const winTool = require('./common/winTool');
 const sesTool = require('./common/sesTool');
@@ -17,11 +16,7 @@ let asarDir = '../app.asar.unpacked';
 if(develop){
     asarDir = '.';
 }
-storage.get('cacheDir',function(error, data) {
-    if(data){
-        app.setPath('userData', data);
-    }
-});
+app.setPath('userData', path.join(__dirname, config.cachePath));
 
 let icon = ''; //图标
 let flashPlugin = ''; //flash插件地址

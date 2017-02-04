@@ -8,16 +8,5 @@ module.exports = function(type){
             let appPath=app.getPath('userData');
             sender.send('app','getCacheDir',appPath);
             break;
-        case 'setCacheDir':
-            dialog.showOpenDialog({properties: ['openDirectory']},function(filePaths){
-                if(filePaths){
-                    let filePath=filePaths[0];
-                    storage.set('cacheDir', filePath);
-                    sender.send('app','setCacheDir',filePath);
-                }else{
-                    sender.send('app','setCacheDir');
-                }
-            })
-            break;
     }
 }
