@@ -1,5 +1,5 @@
 const path = require('path');
-const {BrowserWindow,app,Tray,ipcMain,Menu,protocol} = require('electron');
+const {BrowserWindow,app,Tray,ipcMain,Menu} = require('electron');
 const config = require('./config/');
 const winTool = require('./common/winTool');
 const sesTool = require('./common/sesTool');
@@ -23,23 +23,23 @@ let flashPlugin = ''; //flash插件地址
 let flashVersion = ''; //flash版本
 
 switch (process.platform) {
-    case 'win32':
-        icon = './assets/ico/app.ico';
-        switch(process.arch){
-            case 'x64':
-                flashPlugin=asarDir+'/plugins/flash/win/x64/pepflashplayer.dll';
-                flashVersion='24.0.0.186';
-                break;
-            case 'ia32':
-                flashPlugin=asarDir+'/plugins/flash/win/x86/pepflashplayer.dll';
-                flashVersion='24.0.0.186';
-                break;
-        }
+case 'win32':
+    icon = './assets/ico/app.ico';
+    switch(process.arch){
+    case 'x64':
+        flashPlugin=asarDir+'/plugins/flash/win/x64/pepflashplayer.dll';
+        flashVersion='24.0.0.186';
         break;
-    case 'darwin':
+    case 'ia32':
+        flashPlugin=asarDir+'/plugins/flash/win/x86/pepflashplayer.dll';
+        flashVersion='24.0.0.186';
         break;
-      case 'linux':
-        break;
+    }
+    break;
+case 'darwin':
+    break;
+case 'linux':
+    break;
 }
 
 if(flashPlugin){
@@ -71,7 +71,7 @@ function initialize () {
                     winTool.apply(mainWindow,['close']);
                 }
             }
-        ])
+        ]);
         tray.setToolTip(title);
         tray.setContextMenu(contextMenu);
     }
@@ -84,7 +84,7 @@ function initialize () {
             webPreferences: {
                 plugins: true
             }
-        }
+        };
         mainWindow = new BrowserWindow(windowOptions);
         mainWindow.loadURL(path.join('file://', __dirname, config.preloadPath+'?clientPath='+encodeURIComponent(config.clientPath)));
         // Launch fullscreen with DevTools open, usage: npm run debug
@@ -106,12 +106,12 @@ function initialize () {
     });
     app.on('window-all-closed', function () {
         if (process.platform !== 'darwin') {
-          app.quit();
+            app.quit();
         }
     });
     app.on('activate', function () {
         if (mainWindow === null) {
-          createWindow();
+            createWindow();
         }
     });
 }
@@ -121,33 +121,33 @@ function initialize () {
  * @return {Boolen} 确认结果
  */
 function makeSingleInstance () {
-  if (process.mas) return false;
-  return app.makeSingleInstance(function () {
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore();
-      mainWindow.focus();
-    }
-  })
+    if (process.mas) return false;
+    return app.makeSingleInstance(function () {
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) mainWindow.restore();
+            mainWindow.focus();
+        }
+    });
 }
 
 //检测IPC通讯
-ipcMain.on('window',function(e){
+ipcMain.on('window',function(){
     let args = Array.prototype.slice.call(arguments, 1);
     winTool.apply(mainWindow,args);
 });
 
-ipcMain.on('session',function(e,type){
+ipcMain.on('session',function(e){
     let args = Array.prototype.slice.call(arguments, 1);
     sesTool.apply(e,args);
-})
+});
 
-ipcMain.on('app',function(e,type){
+ipcMain.on('app',function(e){
     let args = Array.prototype.slice.call(arguments, 1);
     appTool.apply(e,args);
-})
+});
 
 //检测进程参数,为自动更新准备
 switch (process.argv[1]){
-  default:
+default:
     initialize();
 }
