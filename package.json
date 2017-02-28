@@ -1,6 +1,6 @@
 {
   "name": "acgo-client",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Client project for acgo",
   "main": "main.js",
   "scripts": {
@@ -29,5 +29,7 @@
     "electron-winstaller": "^2.5.1",
     "del": "^2.2.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "electron-json-storage": "^3.0.1"
+  }
 }

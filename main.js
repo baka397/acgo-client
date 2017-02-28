@@ -1,6 +1,7 @@
 const path = require('path');
 const {BrowserWindow,app,Tray,ipcMain,Menu} = require('electron');
 const config = require('./config/');
+const storage = require('electron-json-storage');
 const winTool = require('./common/winTool');
 const sesTool = require('./common/sesTool');
 const appTool = require('./common/appTool');
@@ -101,7 +102,14 @@ function initialize () {
         });
     }
     app.on('ready', function () {
-        createWindow();
+        //获取用户配置数据
+        storage.get('setting',function(err,data){
+            if(err){
+                data={};
+            }
+            global.userSetting=Object.assign({},data);
+            createWindow();
+        });
         createTray();
     });
     app.on('window-all-closed', function () {
@@ -145,7 +153,6 @@ ipcMain.on('app',function(e){
     let args = Array.prototype.slice.call(arguments, 1);
     appTool.apply(e,args);
 });
-
 //检测进程参数,为自动更新准备
 switch (process.argv[1]){
 default:
