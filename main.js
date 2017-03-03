@@ -1,10 +1,12 @@
 const path = require('path');
+const pkg = require('./package.json');
 const {BrowserWindow,app,Tray,ipcMain,Menu} = require('electron');
 const config = require('./config/');
 const storage = require('electron-json-storage');
 const winTool = require('./common/winTool');
 const sesTool = require('./common/sesTool');
 const appTool = require('./common/appTool');
+const versionTool = require('./common/versionTool');
 
 const develop = /--develop/.test(process.argv[2]);
 const debug = /--debug/.test(process.argv[3]);
@@ -153,6 +155,13 @@ ipcMain.on('app',function(e){
     let args = Array.prototype.slice.call(arguments, 1);
     appTool.apply(e,args);
 });
+
+ipcMain.on('checkVersion',function(e,version){
+    if(!versionTool(version)&&mainWindow){
+        mainWindow.loadURL(path.join('file://', __dirname, config.versionPath+'?curVersion='+pkg.version+'&needVersion='+version));
+    }
+});
+
 //检测进程参数,为自动更新准备
 switch (process.argv[1]){
 default:

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>预加载</title>
+    <title>不支持的版本</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <style type="text/css">
@@ -20,6 +20,9 @@
             align-items:center;
             color: #333;
         }
+        p{
+            margin:0;
+        }
         a{
             text-decoration: none;
             color: #08C;
@@ -28,16 +31,30 @@
         a:hover{
             text-decoration: underline;
         }
+        ol{
+            margin: 0;
+            padding: 0;
+            list-style: inside decimal;
+        }
+        li{
+            margin: 0 5px;
+        }
     </style>
 </head>
 
-<body style="">
-    <p style="margin: 10px;">正在转入,如果长期没有响应,请<a id="open-ex-links">查看帮助</a>.</p>
+<body>
+    <div>
+        <p>你的客户端版本过低(当前<span id="cur-version"></span>,需要<span id="need-version"></span>).你可以:</p>
+    <ol>
+        <li>直接下载:<a id="open-ex-links">github</a></li>
+        <li>2.加入QQ群获取:14527175</li>
+    </ol>
+    </div>
     <script type="text/javascript">
     const shell = require('electron').shell;
     const exLinksBtn = document.getElementById('open-ex-links');
     exLinksBtn.addEventListener('click', function () {
-        shell.openExternal('http://106.75.153.8/godaddy-domain-dns-bug/');
+        shell.openExternal('https://github.com/baka397/acgo-client/releases');
     });
     /**
      * 获取URL链接参数
@@ -50,7 +67,8 @@
         if(r!=null) return decodeURIComponent(r[2]);
         return null;
     }
-    window.location.href=getUrlParam('clientPath');
+    document.getElementById('cur-version').textContent=getUrlParam('curVersion');
+    document.getElementById('need-version').textContent=getUrlParam('needVersion');
     </script>
 </body>
 </html>

@@ -9,6 +9,7 @@ let defaultConfig = {
     },
     clientPath:'http://127.0.0.1:8001/client',              // 客户端地址
     preloadPath:'./assets/page/preload.html',               // 预加载页面
+    versionPath:'./assets/page/version.html',               // 版本提示页
     cachePath:'/cache/'                                     // 缓存目录
 };
 
