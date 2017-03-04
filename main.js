@@ -34,7 +34,7 @@ case 'win32':
         flashVersion='24.0.0.186';
         break;
     case 'ia32':
-        flashPlugin=asarDir+'/plugins/flash/win/x86/pepflashplayer.dll';
+        flashPlugin=asarDir+'/plugins/flash/win/ia32/pepflashplayer.dll';
         flashVersion='24.0.0.186';
         break;
     }

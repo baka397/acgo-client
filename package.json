@@ -16,18 +16,17 @@
   "keywords": [
     "client"
   ],
-  "author": "bakajinsei",
+  "author": "acgo.club",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/baka397/acgo-client/issues"
   },
   "homepage": "https://github.com/baka397/acgo-client#readme",
   "devDependencies": {
+    "del": "^2.2.2",
     "devtron": "^1.4.0",
     "electron": "^1.4.15",
-    "electron-packager": "^8.5.0",
-    "electron-winstaller": "^2.5.1",
-    "del": "^2.2.2"
+    "electron-builder": "^14.5.3"
   },
   "dependencies": {
     "electron-json-storage": "^3.0.1"
