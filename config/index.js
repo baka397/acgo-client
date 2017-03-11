@@ -10,7 +10,10 @@ let defaultConfig = {
     clientPath:'http://127.0.0.1:8001/client',              // 客户端地址
     preloadPath:'./assets/page/preload.html',               // 预加载页面
     versionPath:'./assets/page/version.html',               // 版本提示页
-    cachePath:'/cache/'                                     // 缓存目录
+    cachePath:'/cache/',                                    // 缓存目录
+    //广告屏蔽
+    ruleDoc:'/adblock/',                                    // 规则目录
+    ruleFile:'rule.txt'                                     // 规则文件名
 };
 
 // 启动配置，部署环境变量：debug、online

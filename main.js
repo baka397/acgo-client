@@ -13,12 +13,10 @@ const debug = /--debug/.test(process.argv[3]);
 
 const title = config.project.name + ' version:' + config.project.version;
 
+const blockAd = require('./module/adBlock');
+
 let mainWindow = null;
-let asarDir = '../app.asar.unpacked';
-//设置asar开发配置
-if(develop){
-    asarDir = '.';
-}
+const asarDir=develop?'.':'../app.asar.unpacked';
 app.setPath('userData', path.join(__dirname, asarDir+config.cachePath));
 
 let icon = ''; //图标
@@ -104,6 +102,8 @@ function initialize () {
         });
     }
     app.on('ready', function () {
+        //启用广告屏蔽
+        blockAd();
         //获取用户配置数据
         storage.get('setting',function(err,data){
             if(err){
