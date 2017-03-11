@@ -2,6 +2,7 @@
 const develop = /--develop/.test(process.argv[2]);
 const {session} = require('electron');
 const config = require('../config/');
+const tool = require('../common/tool');
 const path = require('path');
 const ABPFilterParser = require('abp-filter-parser');
 const fs = require('fs');
@@ -13,10 +14,6 @@ let parsedFilterData = {};
 
 ABPFilterParser.parse(easyListTxt, parsedFilterData);
 
-console.log(ABPFilterParser.matches(parsedFilterData, 'http://ads.data.pplive.com/1.html?1OSp3OrU4JbT3t/Jraicy6+e0dKknteWp6Shyqmd', {
-    elementTypeMaskMap: ABPFilterParser.elementTypes.SCRIPT,
-}));
-
 module.exports=function(){
     session.defaultSession.webRequest.onBeforeRequest(['https://*./*','http://*./*'], function(details, callback) {
         if(/^http(s|):\/\/(127\.0\.0\.1|www\.acgo\.club|o8jc34hze\.bkt\.clouddn\.com|oak0s7wv0\.qnssl\.com)/.test(details.url)){
@@ -27,8 +24,8 @@ module.exports=function(){
         })){
             callback({cancel: true});
         }else {
-            global.console.log(details.url);
-            global.console.log('You should NOT block this URL!');
+            tool.log(details.url);
+            tool.log('You should NOT block this URL!');
             callback({cancel: false, requestHeaders: details.requestHeaders});
         }
     });
