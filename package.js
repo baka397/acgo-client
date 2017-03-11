@@ -26,7 +26,7 @@ let winInstallOption={
     }
 };
 
-del(['electron-packager','output']).then(() => {
+del(['electron-packager','output','cache']).then(() => {
     return Promise.all([builder.build({
         targets: Platform.WINDOWS.createTarget(),
         config: Object.assign({
