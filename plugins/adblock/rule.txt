@@ -1,4 +1,4 @@
-[Adblock Plus 2.1]
+﻿[Adblock Plus 2.1]
 ! Checksum: XitZwS9taEYk54/GoeLARA
 ! Version: 20170311
 ! Title: ACGO.filer
@@ -22,4 +22,6 @@ kejet.net
 !PPTV
 ||ads.data.pplive.com
 ||asimgs.pplive.cn
+!爱奇艺
+||hm.baidu.com
 !----------------------------------The End------------------------------------!
