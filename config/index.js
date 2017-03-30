@@ -7,10 +7,13 @@ let defaultConfig = {
         name: pkg.name,                                     // 项目名称
         version: pkg.version                                // 项目版本
     },
+    clientDomain:'http://127.0.0.1:8001',                   // 客户端域名
     clientPath:'http://127.0.0.1:8001/client',              // 客户端地址
     preloadPath:'./assets/page/preload.html',               // 预加载页面
     versionPath:'./assets/page/version.html',               // 版本提示页
     cachePath:'/cache/',                                    // 缓存目录
+    //客户端下载地址配置
+    downloadDomain:'http://o8jc34hze.bkt.clouddn.com',      // 下载域名
     //广告屏蔽
     ruleDoc:'/adblock/',                                    // 规则目录
     ruleFile:'rule.txt'                                     // 规则文件名

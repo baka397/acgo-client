@@ -1,4 +1,5 @@
 ﻿[Adblock Plus 2.1]
+! 在线规则2017-03-301
 ! Checksum: XitZwS9taEYk54/GoeLARA
 ! Version: 20170311
 ! Title: ACGO.filer
@@ -6,6 +7,7 @@
 !通用
 |http://*/ad.js
 |http://*/ad.css
+||hm.baidu.com
 !广告平台
 synacast.com
 suning.com
@@ -23,5 +25,4 @@ kejet.net
 ||ads.data.pplive.com
 ||asimgs.pplive.cn
 !爱奇艺
-||hm.baidu.com
 !----------------------------------The End------------------------------------!
