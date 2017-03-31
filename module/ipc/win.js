@@ -73,7 +73,7 @@ module.exports = function(type){
         this.center();
         break;
     case 'open':
-        openWin = new BrowserWindow(windowOptions);
+        if(!openWin) openWin = new BrowserWindow(windowOptions);
         openWin.loadURL(config.clientPath+args[0]);
         openWin.on('closed', function () {
             openWin = null;

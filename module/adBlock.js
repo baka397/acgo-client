@@ -2,7 +2,7 @@
 const develop = /--develop/.test(process.argv[2]);
 const {session} = require('electron');
 const config = require('../config/');
-const tool = require('../common/tool');
+const log = require('../common/log');
 const path = require('path');
 const ABPFilterParser = require('abp-filter-parser');
 const fs = require('fs');
@@ -24,8 +24,8 @@ module.exports=function(){
         })){
             callback({cancel: true});
         }else {
-            tool.log(details.url);
-            tool.log('You should NOT block this URL!');
+            log.debug(details.url);
+            log.debug('You should NOT block this URL!');
             callback({cancel: false, requestHeaders: details.requestHeaders});
         }
     });

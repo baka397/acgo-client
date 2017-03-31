@@ -1,16 +1,26 @@
 const fs = require('fs');
 const request = require('request');
 const progress = require('request-progress');
-const unzip = require('unzip');
+const tool = require('../common/tool');
+const log = require('../common/log');
+const {shell,app} = require('electron');
 
-module.exports=function(sender,url,to,zip){
+module.exports=function(sender,url,to,openDir){
+    log.info('Start download:'+url);
     progress(request(url))
     .on('progress', function (state) {
-        sender.send('download','progress',state.percent===1?99:state.percent*100);
-    }).on('error', function () {
+        sender.send('download','progress',state.percent===1?99:tool.getFloatNum(state.percent,100,2));
+    }).on('error', function (err) {
+        log.error('Download error');
+        log.error(err);
         sender.send('download','error');
     })
     .on('end', function () {
+        log.info('Download success');
         sender.send('download','success');
-    }).pipe(zip?unzip.Extract({path:to}):fs.createWriteStream(to));
+        if(openDir){
+            shell.showItemInFolder(to);
+            app.quit();
+        }
+    }).pipe(fs.createWriteStream(to));
 };

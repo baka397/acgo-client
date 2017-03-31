@@ -4,8 +4,9 @@
 *.zip
 
 # 忽略目录下的所有文件
-node_modules/*
-coverage/*
-electron-packager/*
-output/*
-cache/*
+node_modules/
+coverage/
+electron-packager/
+output/
+cache/
+update/

@@ -9,8 +9,6 @@ const debug = /--debug/.test(process.argv[3]);
 
 const title = config.project.name + ' version:' + config.project.version;
 
-const blockAd = require('./module/adBlock');
-
 let mainWindow = null;
 const asarDir=develop?'.':'../app.asar.unpacked';
 app.setPath('userData', path.join(__dirname, asarDir+config.cachePath));
@@ -40,7 +38,10 @@ case 'linux':
 }
 // 设置全局变量
 global.ICON = icon;
-global.PLUGIN_DIR = asarDir;
+global.CACHE_DIR = path.join(__dirname, asarDir);
+
+// 载入广告屏蔽插件
+const blockAd = require('./module/adBlock');
 
 // 载入IPC工具
 const winTool = require('./module/ipc/win');
@@ -167,9 +168,9 @@ ipcMain.on('checkVersion',function(e,version){
     }
 });
 
-ipcMain.on('download',function(e){
-    let args = Array.prototype.slice.call(arguments, 1);
-    downloadTool.apply(e,args);
+ipcMain.on('download',function(){
+    let args = Array.prototype.slice.call(arguments, 0);
+    downloadTool.apply(mainWindow,args);
 });
 
 //检测进程参数,为自动更新准备

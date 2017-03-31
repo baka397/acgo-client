@@ -7,6 +7,11 @@ let defaultConfig = {
         name: pkg.name,                                     // 项目名称
         version: pkg.version                                // 项目版本
     },
+    log: {
+        path: './logs/',                                    // 日志路径
+        type: 'console',                                    // 日志打印类型：console、fileLog、dateFileLog
+        level: 'debug'                                      // 日志打印级别：trace、debug、info、warn、error、fatal
+    },
     clientDomain:'http://127.0.0.1:8001',                   // 客户端域名
     clientPath:'http://127.0.0.1:8001/client',              // 客户端地址
     preloadPath:'./assets/page/preload.html',               // 预加载页面

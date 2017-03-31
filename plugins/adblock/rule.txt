@@ -25,4 +25,6 @@ kejet.net
 ||ads.data.pplive.com
 ||asimgs.pplive.cn
 !爱奇艺
+||msg.video.qiyi.com
+||data.video.qiyi.com
 !----------------------------------The End------------------------------------!
