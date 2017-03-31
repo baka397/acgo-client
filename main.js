@@ -1,19 +1,13 @@
 const path = require('path');
-const pkg = require('./package.json');
 const {BrowserWindow,app,Tray,ipcMain,Menu} = require('electron');
 const config = require('./config/');
 const storage = require('electron-json-storage');
-const winTool = require('./common/winTool');
-const sesTool = require('./common/sesTool');
-const appTool = require('./common/appTool');
-const versionTool = require('./common/versionTool');
+const versionTool = require('./common/version');
 
 const develop = /--develop/.test(process.argv[2]);
 const debug = /--debug/.test(process.argv[3]);
 
 const title = config.project.name + ' version:' + config.project.version;
-
-const blockAd = require('./module/adBlock');
 
 let mainWindow = null;
 const asarDir=develop?'.':'../app.asar.unpacked';
@@ -42,6 +36,18 @@ case 'darwin':
 case 'linux':
     break;
 }
+// 设置全局变量
+global.ICON = icon;
+global.CACHE_DIR = path.join(__dirname, asarDir);
+
+// 载入广告屏蔽插件
+const blockAd = require('./module/adBlock');
+
+// 载入IPC工具
+const winTool = require('./module/ipc/win');
+const sesTool = require('./module/ipc/ses');
+const appTool = require('./module/ipc/app');
+const downloadTool = require('./module/ipc/download');
 
 if(flashPlugin){
     app.commandLine.appendSwitch('ppapi-flash-path', path.join(__dirname, flashPlugin));
@@ -97,9 +103,6 @@ function initialize () {
         mainWindow.on('closed', function () {
             mainWindow = null;
         });
-        mainWindow.on('closed', function () {
-            mainWindow = null;
-        });
     }
     app.on('ready', function () {
         //启用广告屏蔽
@@ -109,7 +112,7 @@ function initialize () {
             if(err){
                 data={};
             }
-            global.userSetting=Object.assign({},data);
+            global.USER_SETTING=Object.assign({},data);
             createWindow();
         });
         createTray();
@@ -156,10 +159,18 @@ ipcMain.on('app',function(e){
     appTool.apply(e,args);
 });
 
+let versionChecked;
 ipcMain.on('checkVersion',function(e,version){
+    if(versionChecked) return;
+    versionChecked=true;
     if(!versionTool(version)&&mainWindow){
-        mainWindow.loadURL(path.join('file://', __dirname, config.versionPath+'?curVersion='+pkg.version+'&needVersion='+version));
+        mainWindow.loadURL(config.clientPath+'/version');
     }
+});
+
+ipcMain.on('download',function(){
+    let args = Array.prototype.slice.call(arguments, 0);
+    downloadTool.apply(mainWindow,args);
 });
 
 //检测进程参数,为自动更新准备
